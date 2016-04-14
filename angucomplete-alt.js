@@ -638,6 +638,9 @@
           scope.showDropdown = true;
           showAll();
         }
+        if (scope.searchStr && scope.searchStr.length !== 0) {
+          searchTimerComplete(scope.searchStr);
+        }
       };
 
       scope.hideResults = function() {
