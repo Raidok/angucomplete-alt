@@ -700,11 +700,11 @@
       };
 
       scope.inputChangeHandler = function(str) {
-        if (str.length < minlength) {
+        if (!str ||  str.length < minlength) {
           cancelHttpRequest();
           clearResults();
         }
-        else if (str.length === 0 && minlength === 0) {
+        else if (str && str.length === 0 && minlength === 0) {
           scope.searching = false;
           showAll();
         }
