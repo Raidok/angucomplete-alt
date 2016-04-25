@@ -99,7 +99,7 @@
           // remove scope listener
           unbindInitialValue();
           // change input
-          handleInputChange(newval, true);
+          handleInputChange(newval, (scope.initialValueValid === 'false' ? false : true));
         }
       });
 
@@ -145,7 +145,7 @@
             }
           }
 
-          handleRequired(true);
+          handleRequired(initial);
         }
       }
 
@@ -744,7 +744,7 @@
       if (scope.fieldRequired && ctrl) {
         // check initial value, if given, set validitity to true
         if (scope.initialValue) {
-          handleRequired(true);
+          handleRequired((scope.initialValueValid === 'false' ? false : true));
         }
         else {
           handleRequired(false);
@@ -783,6 +783,7 @@
         selectedObject: '=',
         disableInput: '=',
         initialValue: '=',
+        initialValueValid: '@',
         localData: '=',
         localSearch: '&',
         remoteUrlRequestFormatter: '=',
