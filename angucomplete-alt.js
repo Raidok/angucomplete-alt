@@ -76,6 +76,8 @@
       var dd = elem[0].querySelector('.angucomplete-dropdown');
       var isScrollOn = false;
       var mousedownOn = null;
+      var initialValue;
+      var initialValueValid;
       var unbindInitialValue;
       var displaySearching;
       var displayNoResults;
@@ -96,10 +98,13 @@
       scope.searching = false;
       unbindInitialValue = scope.$watch('initialValue', function(newval) {
         if (newval) {
+          // backup
+          initialValue = newval;
+          initialValueValid = scope.initialValueValid === 'false' ? false : true;
           // remove scope listener
           unbindInitialValue();
           // change input
-          handleInputChange(newval, (scope.initialValueValid === 'false' ? false : true));
+          handleInputChange(newval, initialValueValid);
         }
       });
 
@@ -238,7 +243,14 @@
         scope.notEmpty = valid;
         validState = scope.searchStr;
         if (scope.fieldRequired && ctrl && scope.inputName) {
-          ctrl[scope.inputName].$setValidity(requiredClassName, valid);
+          if (initialValueValid && scope.searchStr === initialValue) {
+            ctrl[scope.inputName].$setValidity(requiredClassName, false);
+          } else {
+            ctrl[scope.inputName].$setValidity(requiredClassName, valid);
+            if (valid) {
+              ctrl[scope.inputName].showError = false;
+            }
+          }
         }
       }
 
@@ -744,7 +756,7 @@
       if (scope.fieldRequired && ctrl) {
         // check initial value, if given, set validitity to true
         if (scope.initialValue) {
-          handleRequired((scope.initialValueValid === 'false' ? false : true));
+          handleRequired(initialValueValid);
         }
         else {
           handleRequired(false);
