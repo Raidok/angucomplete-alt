@@ -244,7 +244,7 @@
         validState = scope.searchStr;
         if (scope.fieldRequired && ctrl && scope.inputName) {
           if (initialValueValid && scope.searchStr === initialValue) {
-            ctrl[scope.inputName].$setValidity(requiredClassName, false);
+            ctrl[scope.inputName].$setValidity(requiredClassName, true);
           } else {
             ctrl[scope.inputName].$setValidity(requiredClassName, valid);
             if (valid) {
