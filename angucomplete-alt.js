@@ -133,7 +133,7 @@
 
       scope.$on('angucomplete-alt:changeInput', function (event, elementId, newval) {
         if (!!elementId && elementId === scope.id) {
-          handleInputChange(newval);
+          handleInputChange(newval, true);
         }
       });
 
@@ -150,7 +150,7 @@
             }
           }
 
-          handleRequired(initial);
+          handleRequired(!!initial);
         }
       }
 
